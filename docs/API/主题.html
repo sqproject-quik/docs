@@ -22,11 +22,85 @@
         <div class="markdown-body"><a name="主题"></a><h1>主题</h1><p>相当一部分插件都是提供另一个风格的主题样式，QUIK起始页内置了一个简单的API。</p>
 <p>像这样添加一个主题选项，当用户在设置选择了这个主题后，body就会添加mytheme这个className :</p>
 <pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">custom</span>.<span class="hljs-title function_">addTheme</span>(<span class="hljs-string">&#x27;mytheme&#x27;</span>,<span class="hljs-string">&#x27;我的主题&#x27;</span>,{
-    <span class="hljs-attr">color</span>:[<span class="hljs-string">&#x27;#fff&#x27;</span>,<span class="hljs-string">&#x27;#333&#x27;</span>] <span class="hljs-comment">// 推荐的背景颜色 [亮色背景色，暗色背景色] 当用户设置背景为跟随主题时应用</span>
-})</code></pre><p>然后就可以像这样自定义样式：</p>
+    <span class="hljs-attr">color</span>:[<span class="hljs-string">&#x27;#fff&#x27;</span>,<span class="hljs-string">&#x27;#333&#x27;</span>], <span class="hljs-comment">// 推荐的背景颜色 [亮色背景色，暗色背景色] 当用户设置背景为跟随主题时应用</span>
+    <span class="hljs-attr">type</span>:<span class="hljs-string">&quot;global&quot;</span><span class="hljs-comment">// 见下方</span>
+})</code></pre><p>其中type分三种：<code>global</code>,<code>color</code>,<code>structure</code>，分别对应全局主题，颜色主题，结构主题。</p>
+<p>全局主题则是从颜色到元素结构等全部重写，且不能与其他主题组合使用。若不写明type则默认为全局主题。</p>
+<p>颜色主题则是只更改颜色，结构主题则是只更改元素结构。这两种主题可以组合使用，结构主题也可以同时应用多种。</p>
+<p>然后就可以像这样自定义样式：</p>
 <pre><code class="hljs hljs-css"><span class="hljs-selector-tag">body</span><span class="hljs-selector-class">.mytheme</span> ...{
     <span class="hljs-comment">/*...*/</span>
-}</code></pre><p>主题颜色可以通过以下方式获取：</p>
+}</code></pre><p>对于颜色主题，我们提供了如下方便的CSS变量，页面大部分颜色均读取此变量库，修改时只需修改变量即可：</p>
+<pre><code class="hljs hljs-css"><span class="hljs-selector-tag">body</span><span class="hljs-selector-class">.mytheme</span>{
+    <span class="hljs-comment">/*主题颜色*/</span>
+    <span class="hljs-attr">--theme-color-deep</span>:<span class="hljs-number">#06f</span>;
+    <span class="hljs-attr">--theme-color</span>:<span class="hljs-number">#09f</span>;
+    <span class="hljs-attr">--theme-color-mild</span>:<span class="hljs-number">#0af</span>;
+    <span class="hljs-attr">--theme-bg-text-color</span>:<span class="hljs-built_in">var</span>(--white);
+
+    <span class="hljs-comment">/*通用颜色*/</span>
+    <span class="hljs-attr">--text-color</span>:<span class="hljs-built_in">var</span>(--black);
+    <span class="hljs-attr">--text-color-mild</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">11</span>);
+    <span class="hljs-attr">--text-color-dark</span>:<span class="hljs-built_in">var</span>(--white);
+    <span class="hljs-attr">--text-color-mild-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">3</span>);
+    <span class="hljs-attr">--el-hover-color</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">2</span>);
+    <span class="hljs-attr">--el-hover-color-dark</span>: <span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">9</span>);
+    <span class="hljs-attr">--el-hover-color-dark-opa</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">85</span>,<span class="hljs-number">85</span>,<span class="hljs-number">85</span>,.<span class="hljs-number">7</span>);
+    <span class="hljs-attr">--el-hover-mild</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">1</span>);
+    <span class="hljs-attr">--el-hover-mild-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">7</span>);
+    <span class="hljs-attr">--el-hover-mild-opa</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">244</span>,<span class="hljs-number">244</span>,<span class="hljs-number">244</span>,<span class="hljs-number">0.7</span>);
+    <span class="hljs-attr">--el-border</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">2</span>);
+    <span class="hljs-attr">--el-border-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">10</span>a);
+    <span class="hljs-attr">--hr-color</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">2</span>);
+    <span class="hljs-attr">--hr-color-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">9</span>);
+    <span class="hljs-attr">--dark-bg</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">10</span>);
+    <span class="hljs-attr">--light-bg</span>:<span class="hljs-built_in">var</span>(--white);
+    <span class="hljs-attr">--dark-bg-opa</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">51</span>,<span class="hljs-number">51</span>,<span class="hljs-number">51</span>,.<span class="hljs-number">7</span>);
+    <span class="hljs-attr">--light-bg-opa</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,.<span class="hljs-number">7</span>);
+    <span class="hljs-attr">--desc-text-color</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">7</span>);
+    <span class="hljs-attr">--desc-text-color-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">7</span>);
+    <span class="hljs-attr">--shadow-color</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">6</span>);
+    <span class="hljs-attr">--shadow-mild</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">4</span>);
+    <span class="hljs-attr">--shadow-color-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">8</span>);
+    
+    <span class="hljs-comment">/*部分地方专属颜色*/</span>
+    <span class="hljs-attr">--btn-color</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">2</span>);
+    <span class="hljs-attr">--btn-hover</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">3</span>);
+    <span class="hljs-attr">--btn-active</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">1</span>a);
+    <span class="hljs-attr">--btn-text-color</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">10</span>);
+    <span class="hljs-attr">--input-bottom</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">2</span>a);
+    <span class="hljs-attr">--action-bar-border</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">2</span>);
+    <span class="hljs-attr">--action-bar-border-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">8</span>);
+    <span class="hljs-attr">--icon-btn-hover</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">238</span>, <span class="hljs-number">238</span>, <span class="hljs-number">238</span>,.<span class="hljs-number">5</span>);
+    <span class="hljs-attr">--icon-btn-hover-dark</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">102</span>, <span class="hljs-number">102</span>, <span class="hljs-number">102</span>, <span class="hljs-number">0.4</span>);
+    <span class="hljs-attr">--cate-active</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">2</span>);
+    <span class="hljs-attr">--cate-active-t-dark</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">220</span>,<span class="hljs-number">220</span>,<span class="hljs-number">220</span>, <span class="hljs-number">0.7</span>);
+    <span class="hljs-attr">--cate-active-t-dark-hover</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">220</span>,<span class="hljs-number">220</span>,<span class="hljs-number">220</span>, <span class="hljs-number">0.5</span>);
+    <span class="hljs-attr">--cate-active-dark</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">102</span>, <span class="hljs-number">102</span>, <span class="hljs-number">102</span>, <span class="hljs-number">0.7</span>);
+    <span class="hljs-attr">--cate-active-dark-hover</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">72</span>, <span class="hljs-number">72</span>, <span class="hljs-number">72</span>, <span class="hljs-number">0.7</span>);
+    <span class="hljs-attr">--link-bg</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">230</span>, <span class="hljs-number">230</span>, <span class="hljs-number">230</span>, <span class="hljs-number">0.6</span>);
+    <span class="hljs-attr">--link-bg-dark</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">75</span>, <span class="hljs-number">75</span>, <span class="hljs-number">75</span>, <span class="hljs-number">0.6</span>);
+    <span class="hljs-attr">--link-menued</span>:<span class="hljs-built_in">rgb</span>(<span class="hljs-number">210</span>, <span class="hljs-number">210</span>, <span class="hljs-number">210</span>,.<span class="hljs-number">6</span>);
+    <span class="hljs-attr">--link-menued-dark</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">109</span>, <span class="hljs-number">109</span>, <span class="hljs-number">109</span>, <span class="hljs-number">0.6</span>);
+    <span class="hljs-attr">--link-menued-shadow</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">1</span>);
+    <span class="hljs-attr">--link-menued-shadow-dark</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,.<span class="hljs-number">1</span>);
+    <span class="hljs-attr">--lite-cover</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,.<span class="hljs-number">3</span>);
+    <span class="hljs-attr">--lite-cover-dark</span>:<span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">3</span>);
+    <span class="hljs-attr">--notice-progress-bg</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">2</span>);
+    <span class="hljs-attr">--checkbox-bg</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">3</span>);
+    <span class="hljs-attr">--checkbox-inner-bg</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">6</span>);
+    <span class="hljs-attr">--qui-select-bg</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">1</span>b);
+    <span class="hljs-attr">--qui-select-bg-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">10</span>c);
+    <span class="hljs-attr">--qui-select-hover</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">1</span>c);
+    <span class="hljs-attr">--qui-select-hover-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">10</span>b);
+    <span class="hljs-attr">--qui-select-active</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">4</span>);
+    <span class="hljs-attr">--qui-select-active-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">8</span>);
+    <span class="hljs-attr">--qui-select-color</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">10</span>);
+    <span class="hljs-attr">--qui-select-color-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">3</span>);
+    <span class="hljs-attr">--qui-select-border</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">3</span>);
+    <span class="hljs-attr">--qui-select-border-dark</span>:<span class="hljs-built_in">var</span>(--gray-<span class="hljs-number">8</span>);
+}</code></pre><p>可通过开发者工具等理解每种变量的应用。</p>
+<p>主题颜色可以通过以下方式获取：</p>
 <pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">custom</span>.<span class="hljs-title function_">getColor</span>() <span class="hljs-comment">// dark | light</span></code></pre></div>
     </div>
     <div class="navbtn">
